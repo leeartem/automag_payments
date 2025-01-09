@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('card')->nullable();
             $table->string('name')->nullable();
             $table->string('bank')->nullable();
+            $table->string('vendor')->nullable();
             $table->text('sms');
             $table->softDeletes();
             $table->timestamps();

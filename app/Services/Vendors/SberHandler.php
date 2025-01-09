@@ -10,6 +10,8 @@ use Illuminate\Support\Str;
 
 class SberHandler extends AbstractHandler
 {
+    public const VENDOR = 'sber';
+
     public function run(string $message): void
     {
         $this->validate($message);
@@ -17,6 +19,7 @@ class SberHandler extends AbstractHandler
             ...$this->parse($message),
             'sms' => $message,
             'uuid' => Str::uuid(),
+            'vendor' => self::VENDOR,
         ];
 
         Transaction::query()->create($data);

@@ -10,6 +10,7 @@ class WebhookService
 {
     private const VENDORS = [
         '900' => 'sber',
+        '+79275241157' => 'sber',
     ];
 
     public function run(array $payload): void
