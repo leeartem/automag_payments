@@ -27,6 +27,8 @@ class WebhookService
         try {
             $handler->run($payload['message']);
         } catch (\Throwable $exception) {
+            echo $exception->getMessage();
+//            throw $exception;
             abort(404);
         }
     }
