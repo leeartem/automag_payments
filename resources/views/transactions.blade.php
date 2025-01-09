@@ -45,7 +45,7 @@
                                     {{ $transaction->vendor }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ $transaction->name }}
+                                    {{ $transaction->name ?? '-' }}
                                 </td>
                                 <td class="px-6 py-4">
                                     {{ $transaction->created_at->translatedFormat('d F Y, H:i') }}
