@@ -4,7 +4,7 @@
             {{ __('Платежи') }}
         </h2>
     </x-slot>
-
+    @if(auth()->user()->isAdmin())
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex-col gap-5">
             <div class="block w-full bg-white overflow-hidden shadow-sm sm:rounded-lg px-5 py-4 mb-5">
@@ -16,7 +16,7 @@
                 </h1>
 
 
-                @if(auth()->user()->isAdmin())
+
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -55,9 +55,10 @@
                         </tbody>
                     </table>
                 </div>
-                @endif
+
 
             </div>
         </div>
     </div>
+    @endif
 </x-app-layout>
