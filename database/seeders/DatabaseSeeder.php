@@ -19,8 +19,29 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Админ',
             'email' => 'automag_kam@mail.ru',
-            'password' => Hash::make('9S##)1md81jmd(*H'),
+            'password' => config('app.admin_password'),
             'role_id' => 1,
+        ]);
+
+        User::factory()->create([
+            'name' => 'Автомаг Базарова',
+            'email' => 'bazarova@automagkam.ru',
+            'password' => config('app.user_password'),
+            'role_id' => 2,
+        ]);
+
+        User::factory()->create([
+            'name' => 'Автомаг Партсъезда',
+            'email' => 'partsezd@automagkam.ru',
+            'password' => config('app.user_password'),
+            'role_id' => 2,
+        ]);
+
+        User::factory()->create([
+            'name' => 'Автомаг Некрасова',
+            'email' => 'nekrasova@automagkam.ru',
+            'password' => config('app.user_password'),
+            'role_id' => 2,
         ]);
     }
 }
