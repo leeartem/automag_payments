@@ -28,15 +28,17 @@ class TinkoffHandler extends AbstractHandler
     protected function validate(string $message): void
     {
         if (
-            !str_contains($message, 'Пополнение на ')
+            !str_contains($message, 'Пополнение на')
         ) {
-            abort(404);
+            throw new \Exception('Wrong message');
         }
     }
 
     protected function parse(string $message): array
     {
+        $message = str_replace("\u{A0}", " ", $message);
         $pattern = '/Пополнение на (\d+(?:,\d+)?) ₽.*? ([А-ЯЁ][а-яё]+\s[А-ЯЁ]\.)/u';
+//        dd($message);
 
         if (preg_match($pattern, $message, $matches)) {
             $amount = str_replace(',', '.', $matches[1]);
@@ -47,7 +49,7 @@ class TinkoffHandler extends AbstractHandler
                 'name'   => $name,
             ];
         } else {
-            abort(404);
+            throw new \Exception('Parsing failed');
         }
     }
 }
