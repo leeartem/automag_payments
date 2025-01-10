@@ -14,6 +14,7 @@ class TinkoffHandler extends AbstractHandler
 
     public function run(string $message): void
     {
+        $message = str_replace("\u{A0}", " ", $message);
         $this->validate($message);
         $data = [
             ...$this->parse($message),
@@ -36,7 +37,6 @@ class TinkoffHandler extends AbstractHandler
 
     protected function parse(string $message): array
     {
-        $message = str_replace("\u{A0}", " ", $message);
         $pattern = '/Пополнение на (\d+(?:,\d+)?) ₽.*? ([А-ЯЁ][а-яё]+\s[А-ЯЁ]\.)/u';
 //        dd($message);
 
