@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class WebhookController extends Controller
 {
-    public function webhook(Request $request, WebhookService $webhookService)
+    public function webhookPush(Request $request, WebhookService $webhookService)
     {
         $webhookService->run($request->all());
 
