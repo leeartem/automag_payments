@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->uuid();
-            $table->decimal('amount', 7);
+            $table->decimal('amount', 12);
             $table->string('status')->default('success');
             $table->string('card')->nullable();
             $table->string('name')->nullable();
