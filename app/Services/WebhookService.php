@@ -10,14 +10,13 @@ use App\Services\Vendors\TinkoffHandler;
 class WebhookService
 {
     private const VENDORS = [
-        '900' => 'sber',
-        '+79275241157' => 'sber',
-        'T-Bank' => 'tinkoff',
+        'com.idamob.tinkoff.android' => 'tinkoff',
+        'ru.sberbankmobile' => 'sber',
     ];
 
     public function run(array $payload): void
     {
-        $handler = match (self::VENDORS[$payload['sender']]) {
+        $handler = match (self::VENDORS[$payload['packageName']]) {
             'sber' => app(SberHandler::class),
             'tinkoff' => app(TinkoffHandler::class),
             default => null
@@ -28,7 +27,7 @@ class WebhookService
         }
 
         try {
-            $handler->run($payload['message']);
+            $handler->run($payload['message'], $payload['sender']);
         } catch (\Throwable $exception) {
             throw $exception;
 //            abort(404);

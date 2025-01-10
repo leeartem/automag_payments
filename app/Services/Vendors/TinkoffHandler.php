@@ -35,7 +35,7 @@ class TinkoffHandler extends AbstractHandler
         }
     }
 
-    protected function parse(string $message): array
+    protected function parse(string $message, ?string $title = null): array
     {
         $pattern = '/Пополнение на (\d+(?:,\d+)?) ₽.*? ([А-ЯЁ][а-яё]+\s[А-ЯЁ]\.)/u';
 //        dd($message);

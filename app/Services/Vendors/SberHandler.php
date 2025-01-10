@@ -12,11 +12,11 @@ class SberHandler extends AbstractHandler
 {
     public const VENDOR = 'sber';
 
-    public function run(string $message): void
+    public function run(string $message, ?string $title = null): void
     {
-        $this->validate($message);
+        $this->validate($title);
         $data = [
-            ...$this->parse($message),
+            ...$this->parse($title, $message),
             'sms' => $message,
             'uuid' => Str::uuid(),
             'vendor' => self::VENDOR,
@@ -25,30 +25,26 @@ class SberHandler extends AbstractHandler
         Transaction::query()->create($data);
     }
 
-    protected function validate(string $message): void
+    protected function validate(string $title): void
     {
         if (
-            !str_contains($message, 'Перевод из')
+            !str_contains($title, 'Перевод от')
         ) {
-            abort(404);
+            throw new \Exception('Wrong message');
         }
     }
 
-    protected function parse(string $message): array
+    protected function parse(string $title, string $message): array
     {
         $result = [];
 
-        preg_match('/\b(\w+-\d+)\b/', $message, $matches);
-        $result['card'] = $matches[1] ?? null;
-
-        preg_match('/из ([\wА-Яа-я\s]+)/u', $message, $matches);
-        $result['bank'] = trim($matches[1] ?? '');
-
-        preg_match('/\+([\d.]+)р от/', $message, $matches);
-        $result['amount'] = isset($matches[1]) ? (float)$matches[1] : null;
-
         preg_match('/от ([^.]+)\./u', $message, $matches);
-        $result['name'] = $matches[1] ?? null;
+        $result['name'] = str_replace("Игорь У.: Перевод от ", "", $title) ?? null;
+
+        if (preg_match('/^([\w\s\p{Pd}]+)\s\+\s([\d,\.]+)\s?₽/u', $message, $matches)) {
+            $result['bank'] = $matches[1];
+            $result['amount'] = (float) str_replace(',', '.', $matches[2]);
+        }
 
         return $result;
     }
