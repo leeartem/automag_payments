@@ -12,7 +12,7 @@ class Transaction extends Model
     {
         return self::query()
             ->where('amount', $amount)
-            ->where('created_at', '>=', now()->subDays(2))
+            ->where('created_at', '>=', now()->subHours())
             ->latest()
             ->first();
     }
