@@ -11,6 +11,6 @@ class WebhookController extends Controller
     {
 //        $webhookService->run($request->all());
 
-//        return response()->json('Ok');
+        return response()->json('Ok');
     }
 }
