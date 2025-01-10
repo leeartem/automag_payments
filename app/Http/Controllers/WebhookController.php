@@ -9,7 +9,7 @@ class WebhookController extends Controller
 {
     public function webhook(Request $request, WebhookService $webhookService)
     {
-//        $webhookService->run($request->all());
+        $webhookService->run($request->all());
 
         return response()->json('Ok');
     }
